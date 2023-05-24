@@ -1,5 +1,11 @@
 import streamlit
+import requests
 import pandas as pd
+
+
+
+
+
 streamlit.title('My parents new healthy dinner')
 
 streamlit.header('🥣 Breakfast Menu')
@@ -19,6 +25,15 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
+
+
+streamlit.header("Fruityvice Fruit Advice!")
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+streamlit.write('The user entered ', fruit_choice)
+fruityvice_response=requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+# write your own comment - what does this do?
+streamlit.dataframe(fruityvice_normalized)
 
 
 
